@@ -1,0 +1,12 @@
+env/
+__pycache__/
+*.pyc
+jobcompanion.db
+agent_memory.db
+.env
+qdrant_data/
+uploads/
+scratchpad
+node_modules/
+.DS_Store
+*.log
