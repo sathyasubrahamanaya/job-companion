@@ -53,6 +53,11 @@
                             class="text-gray-700 hover:text-primary-600 font-medium"
                             >AI Search</a
                         >
+                        <a
+                            href="/candidate/resume-builder"
+                            class="text-gray-700 hover:text-primary-600 font-medium"
+                            >Resume Builder</a
+                        >
                     {:else if user?.role === UserRole.EMPLOYER}
                         <a
                             href="/employer/dashboard"

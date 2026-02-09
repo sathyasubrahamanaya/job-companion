@@ -11,6 +11,7 @@ from app.db.session import create_db_and_tables
 from app.routers import candidate, employer, jobs,auth
 from app.schemas.response import APIResponse
 from app.routers import interview
+from app.routers import resume_builder
 
 
 
@@ -78,7 +79,7 @@ app.include_router(employer.router, prefix="/api/v1/employer", tags=["Employer"]
 app.include_router(interview.router, prefix="/api/v1/interview", tags=["Interview"])
 app.include_router(jobs.router, prefix="/api/v1/jobs", tags=["Jobs"])
 
-
+app.include_router(resume_builder.router, prefix="/api/v1/resume", tags=["Resume Builder"]) 
 
 
 

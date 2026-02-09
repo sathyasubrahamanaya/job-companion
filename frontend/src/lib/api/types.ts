@@ -201,3 +201,45 @@ export interface Notification {
     memo_employer?: string;
     created_at: string;
 }
+
+// Resume Builder Types
+export interface WorkExperience {
+    title: string;
+    company: string;
+    duration: string;
+    description: string[];
+}
+
+export interface Education {
+    degree: string;
+    institution: string;
+    year: string;
+}
+
+export interface Project {
+    name: string;
+    description: string;
+    tech_stack: string[];
+}
+
+export interface ResumeInput {
+    full_name: string;
+    email: string;
+    phone?: string;
+    linkedin_url?: string;
+    photo_url?: string;
+    professional_summary?: string;
+    skills: string[];
+    experience: WorkExperience[];
+    education: Education[];
+    projects: Project[];
+}
+
+export interface ResumeData extends ResumeInput {
+    professional_summary: string; // Required in output
+}
+
+export interface ResumeBuildResponse {
+    json_data: ResumeData;
+    html_content: string;
+}

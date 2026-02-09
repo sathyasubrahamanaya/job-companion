@@ -17,3 +17,5 @@ passlib[bcrypt]
 python-jose[cryptography]
 bcrypt==4.0.1
 qdrant-client[fastembed]>=1.10.0
+reportlab
+requests
