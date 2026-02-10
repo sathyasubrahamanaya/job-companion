@@ -3,6 +3,10 @@
 
     export let job: Job;
     export let onClick: (() => void) | undefined = undefined;
+
+    // Handle both search results and full job objects
+    $: skills = job.required_skills || job.skills || [];
+    $: salaryDisplay = job.salary_range || job.salary || "";
 </script>
 
 <div
@@ -21,19 +25,19 @@
         </span>
     </div>
 
-    <p class="text-gray-600 text-sm mb-4 line-clamp-2">{job.description}</p>
+    {#if job.description}
+        <p class="text-gray-600 text-sm mb-4 line-clamp-2">{job.description}</p>
+    {/if}
 
     <div class="flex flex-wrap gap-2 mb-4">
-        {#each job.required_skills.slice(0, 4) as skill}
-            <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-md"
-                >{skill}</span
-            >
+        {#each skills.slice(0, 4) as skill}
+            <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-md">
+                {skill}
+            </span>
         {/each}
-        {#if job.required_skills.length > 4}
-            <span
-                class="px-2 py-1 bg-gray-100 text-gray-500 text-xs rounded-md"
-            >
-                +{job.required_skills.length - 4} more
+        {#if skills.length > 4}
+            <span class="px-2 py-1 bg-gray-100 text-gray-500 text-xs rounded-md">
+                +{skills.length - 4} more
             </span>
         {/if}
     </div>
@@ -62,27 +66,40 @@
                 </svg>
                 {job.location}
             </span>
-            <span class="flex items-center">
-                <svg
-                    class="w-4 h-4 mr-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                    />
-                </svg>
-                {job.experience_required} years
-            </span>
+            {#if job.experience_required}
+                <span class="flex items-center">
+                    <svg
+                        class="w-4 h-4 mr-1"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                        />
+                    </svg>
+                    {job.experience_required} years
+                </span>
+            {/if}
         </div>
-        {#if job.salary_range}
-            <span class="font-semibold text-primary-600"
-                >{job.salary_range}</span
-            >
+        {#if salaryDisplay}
+            <span class="font-semibold text-primary-600">
+                {salaryDisplay}
+            </span>
         {/if}
     </div>
+
+    {#if job.match_score !== undefined}
+        <div class="mt-3 pt-3 border-t border-gray-200">
+            <div class="flex items-center justify-between text-sm">
+                <span class="text-gray-500">Match Score</span>
+                <span class="font-semibold text-primary-600">
+                    {Math.round(job.match_score * 100)}%
+                </span>
+            </div>
+        </div>
+    {/if}
 </div>

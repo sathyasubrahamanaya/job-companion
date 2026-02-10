@@ -29,11 +29,17 @@
 
         loading = true;
         try {
+            console.log("🔍 Searching for:", query);
             const response = await searchJobs({ query, limit: 20 });
+            console.log("✅ Response received:", response);
+            console.log("📦 Response.Data:", response.Data);
+
             jobs = response.Data || [];
             searched = true;
             toastStore.show("success", `Found ${jobs.length} matching jobs`);
         } catch (err: any) {
+            console.error("❌ Search error:", err);
+            console.error("Error details:", err.response?.data);
             toastStore.show("error", "Search failed. Please try again.");
         } finally {
             loading = false;

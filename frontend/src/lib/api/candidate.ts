@@ -52,13 +52,13 @@ export async function updateResume(file: File): Promise<APIResponse<null>> {
 }
 
 export async function searchJobs(request: SearchJobsRequest): Promise<APIResponse<Job[]>> {
-    const data = new URLSearchParams();
-    data.append('query', request.query);
-    data.append('limit', (request.limit || 10).toString());
+    const params = new URLSearchParams();
+    params.append('query', request.query);
+    params.append('limit', request.limit?.toString() || '10');
 
     const response = await apiClient.post<APIResponse<Job[]>>(
         '/api/v1/candidate/search-jobs',
-        data,
+        params.toString(),  // ← Changed from 'params' to 'params.toString()'
         {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
